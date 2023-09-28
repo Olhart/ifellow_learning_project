@@ -14,4 +14,5 @@ public class mainPanelElements {
             "-title='TestSelenium_bug" + "']//ancestor::a");
     public static SelenideElement createButton = $x("//a[@id='create_link']");
     public static SelenideElement profileMenuLink = $x("//li[@id='user-options']//child::a[@id='header-details-user-fullname']");
+    public static SelenideElement logoutLink = $x("//a[@id='log_out']");
 }

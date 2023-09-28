@@ -11,5 +11,5 @@ public class taskCardElements {
     public static SelenideElement inWorkStatusLink = $x("//a[@id='action_id_21']");
     public static SelenideElement workFlowBarLink = $x("//a[@id='opsbar-transitions_more']");
     public static SelenideElement resolvedStatusLink = $x("//aui-item-link[@id='action_id_31']");
-    public static SelenideElement doneStatusLink = $x("//aui-item-link[@id='action_id_51']");
+//    public static SelenideElement doneStatusLink = $x("//aui-item-link[@id='action_id_51']");
 }
