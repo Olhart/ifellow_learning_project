@@ -1,6 +1,6 @@
-package Hooks;
+package jiraui.hooks;
 
-import config.Properties;
+import jiraui.config.Properties;
 
 public class ChromeVer114WebHooksForLinux {
     private static Properties properties = Properties.properties;

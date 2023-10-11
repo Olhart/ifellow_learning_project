@@ -1,11 +1,12 @@
-package steps;
+package jiraui.steps;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import elements.taskCardElements;
+import jiraui.elements.taskCardElements;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
 import java.time.Duration;
@@ -19,38 +20,45 @@ public class TaskCardSteps extends taskCardElements {
         Selenide.sleep(5000);
     }
 
+    @Step("Нажать кнопку \"В работе\"")
     @Когда("установили статус задачи \"В работе\"")
     public static void setInWorkTaskStatus() {
         _setTaskStatus(inWorkStatusLink);
     }
 
+    @Step("Нажать кнопку \"Сделать\"")
     @Когда("установили статус задачи \"Сделать\"")
     public static void setNeedToDoTaskStatus() {
         _setTaskStatus(needToDoStatusLink);
     }
 
+    @Step("Нажать кнопку \"Бизнес-процесс\", далее нажать \"Готово\"")
     @Когда("установили статус задачи \"Готово\"")
     public static void setResolvedStatusLinkTaskStatus() {
         workFlowBarLink.shouldBe(Condition.enabled, Duration.ofSeconds(10)).click();
         _setTaskStatus(resolvedStatusLink);
     }
 
+    @Step("Посмотреть статус задачи")
     @Когда("получили статус задачи")
     public static void getTaskStatus() {
         receivedTaskStatus = taskStatus.shouldBe(Condition.visible, Duration.ofSeconds(10)).getText().trim();
         Assertions.assertNotEquals(receivedTaskStatus, "");
     }
 
+    @Step("Проверить, что статус задачи \"{expectedStatus}\"")
     @Тогда("статус задачи отображается {string}")
     public static void checkTaskStatus(String expectedStatus) {
         Assertions.assertEquals(receivedTaskStatus.toLowerCase(), expectedStatus.toLowerCase());
     }
 
+    @Step("Посмотреть статус значения поля \"Исправить в версиях\"")
     @Когда("получили статус значения поля \"Исправить в версиях\"")
     public static void getFixVersion() {
         receivedFixVer = fixVersionLink.shouldBe(Condition.visible, Duration.ofSeconds(10)).getText().trim();
     }
 
+    @Step("Проверить, что статус значения поля равен \"{expectedVersion}\"")
     @Тогда("значение поля \"Исправить в версиях\" отображается {string}")
     public static void checkFixVersion(String expectedVersion) {
         Assertions.assertEquals(receivedFixVer.toLowerCase(), expectedVersion.toLowerCase());

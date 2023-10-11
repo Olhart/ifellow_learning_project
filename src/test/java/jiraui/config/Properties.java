@@ -1,11 +1,11 @@
-package config;
+package jiraui.config;
 
 import org.aeonbits.owner.ConfigFactory;
 import org.aeonbits.owner.Reloadable;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-        "file:src/test/resources/properties/test.properties"
+        "file:src/test/resources/properties/jiraui.properties"
 })
 public interface Properties extends Reloadable {
     Properties properties = ConfigFactory.create(Properties.class);

@@ -1,6 +1,7 @@
 #language: ru
   @webSetUP
   @login
+  @debug
   Функция: Создание новой задачи
 
     Предыстория: Выполнена авторизация на сайте "edujira.ifellow.ru"

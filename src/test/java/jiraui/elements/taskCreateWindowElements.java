@@ -1,4 +1,4 @@
-package elements;
+package jiraui.elements;
 
 import com.codeborne.selenide.SelenideElement;
 
@@ -24,4 +24,5 @@ public class taskCreateWindowElements {
                     "-sibling::div//nav[@class='aui-navgroup aui-navgroup-horizontal " + "editor-toggle-tabs']//child" +
                     "::button[normalize-space(text()) = 'Текст']");
     public static SelenideElement assignMeButton = $x("//button[@id='assign-to-me-trigger']");
+    public static SelenideElement cancelButton = $x("//button[@class='aui-button aui-button-link cancel']");
 }

@@ -1,10 +1,12 @@
-package Hooks;
+package jiraui.hooks;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import steps.DashboardLoginSteps;
-import steps.MainPanelSteps;
-import config.Properties;
+import io.qameta.allure.selenide.AllureSelenide;
+import jiraui.config.Properties;
+import jiraui.steps.DashboardLoginSteps;
+import jiraui.steps.MainPanelSteps;
 
 
 public class BeforeAndAfter {
@@ -24,5 +26,15 @@ public class BeforeAndAfter {
     @Before(value = "@webSetUP", order = 10)
     public void webDriverSetUp() {
         ChromeVer114WebHooksForLinux.driverSetup();
+    }
+
+    @Before
+    public void allureSubTreadParallel() {
+        String listenerName = "AllureSelenide";
+
+        if (!(SelenideLogger.hasListener(listenerName))) {
+            SelenideLogger.addListener(listenerName,
+                    (new AllureSelenide().screenshots(true).savePageSource(false)));
+        }
     }
 }

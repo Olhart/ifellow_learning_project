@@ -1,4 +1,4 @@
-package elements;
+package jiraui.elements;
 
 import com.codeborne.selenide.SelenideElement;
 
