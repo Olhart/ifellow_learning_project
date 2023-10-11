@@ -1,10 +1,9 @@
-import hooks.RickAndMortyAPISetup;
-import org.checkerframework.checker.index.qual.Positive;
+import api.hooks.RickAndMortyAPISetup;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static steps.RickAndMortyAPISteps.*;
+import static api.steps.RickAndMortyAPISteps.*;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;

@@ -1,3 +1,4 @@
+import api.hooks.ReqresAPISetup;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -6,13 +7,12 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import static org.hamcrest.Matchers.equalTo;
-import static steps.JSONSteps.getJSONObjFromFileWithNewParams;
-import static steps.ReqresAPISteps.createNewUserAndGetResponce;
+import static api.steps.JSONSteps.getJSONObjFromFileWithNewParams;
+import static api.steps.ReqresAPISteps.createNewUserAndGetResponce;
 
-public class ReqresAPITest extends hooks.ReqresAPISetup {
+public class ReqresAPITest extends ReqresAPISetup {
     final String[][] newParams = {{"name","Tomato"}, {"job","Eat maket"}};
 
     @Test
