@@ -1,8 +1,8 @@
 #language: ru
+@severity=critical
   @webSetUP
   @login
-  @debug
-  Функция: Создание новой задачи
+  Функция: Тестирование веб-приложения Jira
 
     Предыстория: Выполнена авторизация на сайте "edujira.ifellow.ru"
 

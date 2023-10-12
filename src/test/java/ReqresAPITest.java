@@ -1,35 +1,48 @@
-import api.hooks.ReqresAPISetup;
+import api.reqres.config.Properties;
+import api.reqres.hooks.Setup;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import static org.hamcrest.Matchers.equalTo;
-import static api.steps.JSONSteps.getJSONObjFromFileWithNewParams;
-import static api.steps.ReqresAPISteps.createNewUserAndGetResponce;
+import static api.reqres.steps.APISteps.createNewUserAndGetResponce;
+import static api.reqres.steps.AssertSteps.*;
+import static api.reqres.steps.ParseJSONSteps.*;
 
-public class ReqresAPITest extends ReqresAPISetup {
-    final String[][] newParams = {{"name","Tomato"}, {"job","Eat maket"}};
+
+@Epic("API тесты")
+@Feature("RegresAPI тестирование")
+@Owner("Ольхов Артем")
+public class ReqresAPITest extends Setup {
+    final private int statusCode201 = 201;
+    final private String inspectedParamNameName = "name";
+    final private String paramNameValue = "Tomato";
+    final private String inspectedParamJobName = "job";
+    final private String paramJobValue = "Eat maket";
+    private static Properties properties = Properties.properties;
 
     @Test
-    public void Test() throws ParseException {
-        JSONObject requestParams = getJSONObjFromFileWithNewParams(newParams);
-        Response response = createNewUserAndGetResponce(requestParams);
-        response
-                .then()
-                .assertThat()
-                .statusCode(201) // исправил на 201 - при создании возвращает его
-                .body(newParams[0][0], equalTo(newParams[0][1]))
-                .body(newParams[1][0], equalTo(newParams[1][1]));
-        int id = Integer.parseInt(new JSONObject(response.getBody().asString()).get("id").toString());
-        Assertions.assertNotNull(id);
-        String strDate = new JSONObject(response.getBody().asString()).get("createdAt").toString().trim();
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Успешное создание нового пользователя, сервер возвращает валидные данные")
+    @Description("Создаем нового пользователя отправкой POST запроса с измененными данными, прочитанных из файла, и " + "проверяем валидность возвращенных данных")
+    @DisplayName("Проверка валидности возвращенных с сервера данных")
+    public void Test() throws ParseException, IOException {
+        JSONObject requestParams = getJSONObjFromFile(properties.jsonFileName());
+        requestParams.put(inspectedParamNameName, paramNameValue).put(inspectedParamJobName, paramJobValue);
 
-        java.util.Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").parse(strDate);
-        Assertions.assertTrue(date.before(new Date()));
+        Response response = createNewUserAndGetResponce(requestParams);
+
+        resStatusCodeEqual(response, statusCode201);
+        checkParam(response, inspectedParamNameName, requestParams.get(inspectedParamNameName).toString());
+        checkParam(response, inspectedParamJobName, requestParams.get(inspectedParamJobName).toString());
+
+        JSONObject responseJSON = new JSONObject(response.getBody().asString());
+
+        checkValidID(parseIDFromJSON(responseJSON));
+        checkValidCreateAt(parseDateFromJSON(responseJSON));
     }
 }
